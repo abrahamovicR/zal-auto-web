@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web s Menu</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .dropdown-item:hover { background-color: blue; }
+        .dropdown-menu { transform: translateX(-80%); }
+		.container .row .col-md-6 { padding: 10px; /* Přidává padding kolem každého obrázku */ }
+        img.img-fluid { width: 100%; /* Zajistí, že obrázky jsou plně responzivní */
+		height: auto; /* Udržuje původní poměr stran obrázků */  }
+    </style>
+<body class="bg-dark text-white">
+    <div id="navbar"></div> <!-- Prázdný div pro menu -->
+
+    <!-- Obsah stránky -->
+	
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+
+            <div class="col-md-6 text-center">
+                <img src="./img3.jpg" alt="Náhodný obrázek" class="img-fluid" style="height: 450px; width: auto;">
+            </div>
+            <p>
+                radio.setFrequencyBand(58)
+radio.setTransmitPower(7)<br>
+radio.setGroup(182)
+<br>
+let strip = neopixel.create(DigitalPin.P0, 10, NeoPixelMode.RGB)<br>
+let servo = ServoHelper.createServo()
+<br>
+let center: number;<br>
+let right: number;<br>
+let left: number;<br>
+let sonar
+<br>
+let lock: boolean = false
+<br>
+enum Pins {<br>
+    wr = DigitalPin.P8, //Wheel encoder<br>
+    wl = DigitalPin.P12,
+    r = DigitalPin.P13, // Senzory<br>
+    l = DigitalPin.P14,<br>
+    c = DigitalPin.P15,<br>
+    trig = DigitalPin.P2, // sonar<br>
+    echo = DigitalPin.P1<br>
+}<br>
+
+enum ServoDirection {<br>
+    Left = 2,<br>
+    Center = 1,<br>
+    Right = 0<br>
+}<br>
+
+const allIRPins: Array<number> = [Pins.wr, Pins.wl, Pins.r, Pins.l, Pins.c, Pins.trig]<br>
+for (let pin of allIRPins) {<br>
+    pins.setPull(pin, PinPullMode.PullNone);<br>
+}
+<br>
+const carMotor = (leftwheel: number = 0, rightwheel: number = 0): void => {<br>
+    if (leftwheel === 0 && rightwheel === 0) { PCAmotor.MotorStopAll(); return; }<br>
+    <br>
+    PCAmotor.MotorRun(PCAmotor.Motors.M1, 1 * leftwheel)<br>
+    PCAmotor.MotorRun(PCAmotor.Motors.M4, -1 * rightwheel)<br>
+}<br>
+const servoMove = (direction: ServoDirection): void => {<br>
+    PCAmotor.GeekServo(PCAmotor.Servos.S1, 500 + 1000 * direction)<br>
+    basic.pause(2000)<br>
+    PCAmotor.StopServo(PCAmotor.Servos.S1)<br>
+}<br>
+const turnAround = () => {<br>
+    lock = true<br>
+    carMotor(0, 0)<br>
+    basic.pause(100)<br>
+    carMotor(160, -160)<br>
+    basic.pause(500)<br>
+    carMotor(160, 180)<br>
+    basic.pause(1000)<br>
+    carMotor(-160, 160)<br>
+    basic.pause(500)<br>
+    carMotor(160, 180)<br>
+    basic.pause(1300)<br>
+    carMotor(-10, 200)<br>
+    basic.pause(300)<br>
+    <br>
+    lock = false<br>
+}
+<br>
+loops.everyInterval(100, function () {<br>
+    sonar = Sensors.ping(DigitalPin.P2, DigitalPin.P1, 50)<br>
+    if (lock === false){<br>
+        if (sonar < 12 && sonar != 0) {<br>
+            turnAround()<br>
+        }<br>
+    }<br>
+    <br>
+    console.log(`Sonar: ${sonar}`)<br>
+})
+<br>
+<br>
+basic.forever(function() {<br>
+    center = pins.digitalReadPin(allIRPins[4])<br>
+    right = pins.digitalReadPin(allIRPins[2])<br>
+    left = pins.digitalReadPin(allIRPins[3])<br>
+    <br>
+    servoMove(-500)<br>
+    <br>
+if (lock === false) {<br>
+    if (center === 1 && right === 0 && left === 0 || center === 0 && right === 0 && left === 0 || center === 0 && right ===1 && left === 1) {<br>
+        carMotor(110, 130)<br>
+    } else if (right === 1 && center === 0 && left === 0) {<br>
+        carMotor(130, 10)<br>
+    } else if (left === 1 && center === 0 && right === 0) {<br>
+        carMotor(30, 130)<br>
+    } else if (left === 1 && center === 1 && right === 1) {<br>
+        carMotor(0, 0)<br>
+    }<br>
+}<br>
+    //console.log(`Center: ${center}, Right: ${right}, Left: ${left}`)<br>
+    <br>
+    basic.pause(30)<br>
+})<br>
+<br>
+type Data = {<br>
+    a: boolean,<br>
+    b: boolean,<br>
+    ab: boolean,<br>
+    logo: boolean<br>
+}<br>
+<br>
+let deCode = (retezec: string): Data => {<br>
+    let split: string[] = retezec.split(",");<br>
+    <br>
+    return {<br>
+        a: split[0] === ("1"),<br>
+        b: split[1] === ("1"),<br>
+        ab: split[2] === ("1"),<br>
+        logo: split[3] === ("1")<br>
+    }<br>
+}
+<br>
+radio.onReceivedString(function (retezec) {<br>
+    let received = deCode(retezec)<br>
+    <br>
+    if (received.a === true) {<br>
+        lock = true<br>
+        carMotor(160, 180)<br>
+        if (left === 1 && center === 1 && right === 1 || left === 1 && center === 1 && right === 0 || left === 1 && center === 0 && right === 0) {<br>
+            carMotor(20, 130)<br>
+            basic.pause(400)<br>
+        }<br>
+        lock = false<br>
+    }<br>
+    <br>
+    if (received.b === true) {<br>
+        lock = true<br>
+        carMotor(160, 180)<br>
+        if (left === 1 && center === 1 && right === 1 || left === 0 && center === 1 && right === 1 || left === 0 && center === 0 && right === 1) {<br>
+            carMotor(130, 20)<br>
+            basic.pause(400)<br>
+        }<br>
+        lock = false<br>
+    }<br>
+    <br>
+    if (received.ab === true) {<br>
+        lock = true<br>
+        carMotor(160, 180)<br>
+        if (left === 1 && center === 1 && right === 1 || left === 1 && center === 1 && right === 0 || left === 0 && center === 1 && right === 1 || left === 0 && center === 1 && right === 0) {<br>
+            carMotor(130, 130)<br>
+            basic.pause(200)<br>
+        }<br>
+        lock = false<br>
+    }<br>
+    <br>
+    if (received.logo === true) {<br>
+        carMotor(160, -160)<br>
+        basic.pause(800)<br>
+    }<br>
+    <br>
+})<br>
+            </p>
+
+        </div>
+    </div>
+
+    <!-- Konec obsahu stránky -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="menu.js"></script> <!-- Vložení JavaScriptu pro menu -->
+</body>
+</html>

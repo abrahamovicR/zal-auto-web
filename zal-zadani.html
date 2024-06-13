@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web s Menu</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .dropdown-item:hover {
+            background-color: blue;
+        }
+
+        .dropdown-menu {
+            transform: translateX(-80%);
+        }
+
+        .container .row .col-md-6 {
+            padding: 10px;
+            /* Přidává padding kolem každého obrázku */
+        }
+
+        img.img-fluid {
+            width: 100%;
+            /* Zajistí, že obrázky jsou plně responzivní */
+            height: auto;
+            /* Udržuje původní poměr stran obrázků */
+        }
+    </style>
+
+<body class="bg-dark text-white">
+    <div id="navbar"></div> <!-- Prázdný div pro menu -->
+
+    <!-- Obsah stránky -->
+
+    <div class="container mt-5">
+        <p>
+           
+            Termíny klasifikovaných "závodů"
+            P1A
+            Pondělí 3.6. PeeWee GrandPrix
+            Pátek 14.6. RoboCars Tournament
+
+            Způsob hodnocení
+            PeeWee GrandPrix
+            Známka za absolutní pořadí v hromadném závodě PeeWee řízeného operátorem. (Váha 5) (Max. limit je určen 3×
+            časem vítěze). Překážky jsou totožné jako vloni, podívejte se na video... Pořadí na startu je určeno
+            (lepším) časem z první nebo druhé rozjížďky. (Během jízdy není možné se fyzicky dotýkat vozidla - při
+            uvíznutí je třeba jít zpět na start.)
+            (1.-2. místo = zn. 1; 3. místo = zn. 1-; 4.-5. místo = zn. 2; 6.-7. místo zn. 3; 8. místo = zn. 3-; >8.
+            místo = zn. 4; nad max. limit = zn. 5)
+            Druhá známka (váha 3) za "jemnost" řízení - tzn. jak nejpomaleji, ale ještě plynule jste schopní přesně
+            kopírovat siluetu vepsanou do obdélníka 50×100 cm... Tím otestujeme výstupní kvalitu programování, bez
+            ohledu na čistotu a efektivitu kódu...
+
+            RoboCars Tournament - video z předloni
+            Známka za čas v autonomní jízdě (váha 6) na dráze vyznačené 15-20 mm širokou páskou. Známka je určena
+            aproximací dvou časů. Minimální čas absolutního vítěze určuje 100 %, čas zajetý modelem vyučujícího s
+            primitivním algoritmem určuje 50 % limitu. (Pokud by náhodou nikdo nedosáhl ani na čas vyučujícího jsou
+            uděleny jen známky od 3 do 5.)
+            Do závodu lze zasahovat pouze "pokynem" z ovladače. Tedy například "na další křižovatce zaboč vlevo", nebo
+            "navrať se na trať po pravé straně", "otoč se do protisměru", "na dalších 5 sekund zpomal/zrychli"... Nelze
+            aktivně řídit - ovládat rychlost, směr/zatáčení...
+            Na jaké eventuality se připravit:
+            schopnost projet křižovatku X a T
+            přímo (nutné a bez toho nejde jízdu dokončit)
+            s odbočením vlevo/vpravo
+            rozjezd a zastavení
+            obrátka do protisměru
+            zvládnout jízdu s přípojným pruhem
+            detekovat překážku (nenarazit)
+            objížďka překážky na silnici 25×25 cm
+            Známka (s vahou 6) za komplexitu kódu a efektivitu jeho zápisu. Zde má kladný vliv:
+            počet aktivně využívaných senzorů a aktorů (IR na kolech, IR na čáře, servo, US senzor, RGB WS2812b)
+            neduplikování sekvencí kódu - použití parametrických funkcí
+            používání typů (type), výčtů (enum), typových polí Array
+            počet a kvalita autonomních sekvencí (zatočení, návrat na čáru, obrat, objížďka, rovný průjezd...)
+            použití dohodnutého protokolu komunikace (záporný jeho nepoužití)
+            Poslední známka je "trestná" 5 s vahou 5, udělena těm, kdo v kódu (GrandPrix nebo Tournament) mají
+            specifické nepřípustné postupy. Mezi ně patří zejména:
+            opakovaná inicializace obsluhy události
+            podmíněná inicializace obsluhy události
+            použití blokujících cyklů (např. while (true))
+            opakování (typicky forever) bez omezení maximální frekvence
+            vytváření špagety kódu
+            nadužívání globálních proměnných a nesdružování souvisejících hodnot do společného objektu
+            důsledné ignorování datových typů (nadužívání any)
+            SPŠ Liberec PeeWee GrandPrix …
+            249 views · one year ago
+        </p>
+    </div>
+
+    <!-- Konec obsahu stránky -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="menu.js"></script> <!-- Vložení JavaScriptu pro menu -->
+</body>
+
+</html>
